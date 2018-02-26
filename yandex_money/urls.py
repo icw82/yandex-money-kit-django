@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url
+from django.urls import path
 
 from .views import NoticeFormView
 from .views import CheckOrderFormView
 
 
 urlpatterns = [
-    url(r'^check/$',
+    path('^check/',
         CheckOrderFormView.as_view(),
         name='yandex_money_check'),
 
-    url(r'^aviso/$',
+    path('^aviso/',
         NoticeFormView.as_view(),
         name='yandex_money_notice'),
 ]
