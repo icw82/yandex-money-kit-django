@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
 import logging
 
 from django.http import HttpResponse
@@ -90,10 +89,13 @@ class BaseView(View):
             payment.performed_datetime = now
             payment.save()
 
-            return {'code': '0',
-                    'shopId': str(cd['shopId']),
-                    'invoiceId': str(cd['invoiceId']),
-                    'performedDatetime': now.isoformat()}
+            return {
+                'code': '0',
+                'shopId': str(cd['shopId']),
+                'invoiceId': str(cd['invoiceId']),
+                'performedDatetime': now.isoformat()
+            }
+
         return {'code': '100'}
 
     def mark_payment(self, payment, cd):
@@ -101,10 +103,12 @@ class BaseView(View):
 
     def get_xml(self, params):
         element = self.get_xml_element(**params)
-        return etree.tostring(element,
-                              pretty_print=True,
-                              xml_declaration=True,
-                              encoding='UTF-8')
+        return etree.tostring(
+            element,
+            pretty_print = True,
+            xml_declaration = True,
+            encoding = 'UTF-8'
+        )
 
     def get_xml_element(self, **params):
         raise NotImplementedError()

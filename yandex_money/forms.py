@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
 from hashlib import md5
 
 import six
@@ -55,18 +54,44 @@ class BasePaymentForm(forms.Form):
             (CPAYMENT, 'Уведомления о переводе'),
         )
 
-    shopId = forms.IntegerField(initial=settings.YANDEX_MONEY_SHOP_ID)
-    scid = forms.IntegerField(initial=settings.YANDEX_MONEY_SCID)
-    orderNumber = forms.CharField(min_length=1, max_length=64)
-    customerNumber = forms.CharField(min_length=1, max_length=64)
-    paymentType = forms.CharField(label='Способ оплаты',
-                                  widget=forms.Select(choices=Payment.PAYMENT_TYPE.CHOICES),
-                                  min_length=2, max_length=2,
-                                  initial=Payment.PAYMENT_TYPE.PC)
+    shopId = forms.IntegerField(
+        initial = settings.YANDEX_MONEY_SHOP_ID
+    )
+
+    scid = forms.IntegerField(
+        initial = settings.YANDEX_MONEY_SCID
+    )
+
+    orderNumber = forms.CharField(
+        min_length = 1,
+        max_length = 64
+    )
+
+    customerNumber = forms.CharField(
+        min_length = 1,
+        max_length = 64
+    )
+
+    paymentType = forms.CharField(
+        label = 'Способ оплаты',
+        widget = forms.Select(
+            choices = Payment.PAYMENT_TYPE.CHOICES
+        ),
+        min_length = 2,
+        max_length = 2,
+        initial = Payment.PAYMENT_TYPE.PC
+    )
+
     orderSumBankPaycash = forms.IntegerField()
 
-    md5 = forms.CharField(min_length=32, max_length=32)
-    action = forms.CharField(max_length=16)
+    md5 = forms.CharField(
+        min_length = 32,
+        max_length = 32
+    )
+
+    action = forms.CharField(
+        max_length = 16
+    )
 
     def __init__(self, *args, **kwargs):
         super(BasePaymentForm, self).__init__(*args, **kwargs)
@@ -116,14 +141,28 @@ class BasePaymentForm(forms.Form):
 
 
 class PaymentForm(BasePaymentForm):
-    sum = forms.FloatField(label='Сумма заказа')
+    sum = forms.FloatField(
+        label = 'Сумма заказа'
+    )
 
-    cps_email = forms.EmailField(label='Email', required=False)
-    cps_phone = forms.CharField(label='Телефон',
-                                max_length=15, required=False)
+    cps_email = forms.EmailField(
+        label = 'Email',
+        required = False
+    )
 
-    shopFailURL = forms.URLField(initial=settings.YANDEX_MONEY_FAIL_URL)
-    shopSuccessURL = forms.URLField(initial=settings.YANDEX_MONEY_SUCCESS_URL)
+    cps_phone = forms.CharField(
+        label = 'Телефон',
+        max_length = 15,
+        required = False
+    )
+
+    shopFailURL = forms.URLField(
+        initial = settings.YANDEX_MONEY_FAIL_URL
+    )
+
+    shopSuccessURL = forms.URLField(
+        initial = settings.YANDEX_MONEY_SUCCESS_URL
+    )
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.pop('instance')
@@ -158,19 +197,56 @@ class PaymentForm(BasePaymentForm):
 
 class CheckForm(BasePaymentForm):
     invoiceId = forms.IntegerField()
-    orderSumAmount = forms.DecimalField(min_value=0, decimal_places=2)
+
+    orderSumAmount = forms.DecimalField(
+        min_value = 0,
+        decimal_places = 2
+    )
+
     orderSumCurrencyPaycash = forms.IntegerField()
-    shopSumAmount = forms.DecimalField(min_value=0, decimal_places=2)
+
+    shopSumAmount = forms.DecimalField(
+        min_value = 0,
+        decimal_places = 2
+    )
+
     shopSumCurrencyPaycash = forms.IntegerField()
-    paymentPayerCode = forms.IntegerField(min_value=1, required=False)
+
+    paymentPayerCode = forms.IntegerField(
+        min_value = 1,
+        required = False
+    )
 
 
 class NoticeForm(BasePaymentForm):
-    invoiceId = forms.IntegerField(min_value=1)
-    orderSumAmount = forms.DecimalField(min_value=0, decimal_places=2)
+    invoiceId = forms.IntegerField(
+        min_value = 1
+    )
+
+    orderSumAmount = forms.DecimalField(
+        min_value = 0,
+        decimal_places = 2
+    )
+
     orderSumCurrencyPaycash = forms.IntegerField()
-    shopSumAmount = forms.DecimalField(min_value=0, decimal_places=2)
+
+    shopSumAmount = forms.DecimalField(
+        min_value = 0,
+        decimal_places = 2
+    )
+
     shopSumCurrencyPaycash = forms.IntegerField()
-    paymentPayerCode = forms.IntegerField(min_value=1, required=False)
-    cps_email = forms.EmailField(required=False)
-    cps_phone = forms.CharField(max_length=15, required=False)
+
+    paymentPayerCode = forms.IntegerField(
+        min_value = 1,
+        required = False
+    )
+
+    cps_email = forms.EmailField(
+        required = False
+    )
+
+    cps_phone = forms.CharField(
+        max_length = 15,
+        required = False
+    )
