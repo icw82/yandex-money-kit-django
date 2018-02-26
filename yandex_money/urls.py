@@ -7,11 +7,11 @@ from .views import CheckOrderFormView
 
 
 urlpatterns = [
-    path('^check/',
+    path('check/',
         CheckOrderFormView.as_view(),
-        name='yandex_money_check'),
+        name = 'yandex_money_check'),
 
-    path('^aviso/',
+    path('aviso/',
         NoticeFormView.as_view(),
-        name='yandex_money_notice'),
+        name = 'yandex_money_notice'),
 ]
